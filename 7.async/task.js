@@ -1,11 +1,11 @@
 class AlarmClock {
   constructor() {
     this.alarmCollection = [];
-    this.intervalId = undefined;
+    this.intervalId = null; 
   }
 
   addClock(time, callback) {
-    if (time === undefined || callback === undefined) {
+    if (time == null || callback == null) {
       throw new Error('Отсутствуют обязательные аргументы');
     }
 
