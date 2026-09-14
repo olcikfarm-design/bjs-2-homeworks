@@ -112,10 +112,66 @@ console.log("Количество книг в библиотеке после в
 issuedBook.state = 25;
 console.log("Состояние выданной книги после повреждения:", issuedBook.state); 
 
-issuedBook.fix(); // 25 * 1.5 = 37.5
+issuedBook.fix(); 
 console.log("Состояние выданной книги после восстановления:", issuedBook.state); 
 
 myLibrary.addBook(issuedBook);
 console.log("Количество книг в библиотеке после возврата:", myLibrary.books.length); 
 
 console.log("Есть ли 'Пикник на обочине' в библиотеке?", myLibrary.findBookBy("name", "Пикник на обочине") !== null); 
+
+class Student {
+  constructor(name) {
+    this.name = name;
+    this.marks = {};
+  }
+
+  addMark(mark, subject) {
+    if (mark < 2 || mark > 5) {
+      return; 
+    }
+    if (!this.marks[subject]) {
+      this.marks[subject] = [];
+    }
+
+    this.marks[subject].push(mark);
+  }
+
+  getAverageBySubject(subject) {
+    if (!this.marks[subject] || this.marks[subject].length === 0) {
+      return 0;
+    }
+
+    const sum = this.marks[subject].reduce((acc, currentMark) => acc + currentMark, 0);
+   
+    return sum / this.marks[subject].length;
+  }
+
+  getAverage() {
+    const subjects = Object.keys(this.marks);
+
+    if (subjects.length === 0) {
+      return 0;
+    }
+
+    const totalAverageSum = subjects.reduce((acc, subject) => {
+      return acc + this.getAverageBySubject(subject);
+    }, 0);
+
+    return totalAverageSum / subjects.length;
+  }
+}
+
+const student = new Student("Олег Никифоров");
+
+student.addMark(5, "химия");
+student.addMark(5, "химия");
+student.addMark(5, "физика");
+student.addMark(4, "физика");
+student.addMark(6, "физика"); 
+
+console.log("Средний балл по физике:", student.getAverageBySubject("физика")); 
+
+console.log("Средний балл по биологии:", student.getAverageBySubject("биология")); 
+
+console.log("Общий средний балл:", student.getAverage()); 
